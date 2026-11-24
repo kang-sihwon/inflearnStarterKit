@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Next.js + Express 스타터킷</title>
+<style>
+  :root { --bg:#fff; --fg:#171717; --muted:#737373; --card:#fafafa; --border:#e5e5e5; --accent:#171717; --accent-fg:#fff; --code:#f4f4f5; }
+  :root[data-theme="dark"] { --bg:#0a0a0a; --fg:#ededed; --muted:#a3a3a3; --card:#141414; --border:#262626; --accent:#ededed; --accent-fg:#0a0a0a; --code:#1c1c1c; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font-family:system-ui,-apple-system,"Segoe UI","Malgun Gothic",sans-serif; line-height:1.6; }
+  header { position:sticky; top:0; background:color-mix(in srgb,var(--bg) 85%,transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); }
+  .bar { max-width:960px; margin:0 auto; padding:0 16px; height:56px; display:flex; align-items:center; justify-content:space-between; }
+  main { max-width:960px; margin:0 auto; padding:40px 16px 64px; }
+  h1 { font-size:2.25rem; margin:12px 0; letter-spacing:-.02em; }
+  h2 { font-size:1.25rem; margin:40px 0 12px; }
+  .hero { text-align:center; padding:24px 0; }
+  .hero p { color:var(--muted); max-width:560px; margin:0 auto 20px; }
+  .badge { display:inline-block; font-size:.75rem; padding:2px 10px; border-radius:99px; background:var(--code); border:1px solid var(--border); }
+  .grid { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; }
+  .card h3 { margin:0 0 4px; font-size:1rem; }
+  .card p { margin:0; color:var(--muted); font-size:.9rem; }
+  pre, code { font-family:ui-monospace,Consolas,monospace; }
+  pre { background:var(--code); border:1px solid var(--border); border-radius:10px; padding:16px; overflow-x:auto; font-size:.85rem; margin:0; }
+  table { width:100%; border-collapse:collapse; font-size:.9rem; }
+  td, th { text-align:left; padding:8px 10px; border-bottom:1px solid var(--border); }
+  td:first-child { white-space:nowrap; }
+  button { cursor:pointer; font:inherit; border-radius:8px; padding:6px 14px; border:1px solid var(--border); background:var(--bg); color:var(--fg); }
+  button.primary { background:var(--accent); color:var(--accent-fg); border-color:var(--accent); }
+  .row { display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap; }
+  .copy { position:relative; }
+  .copy button { position:absolute; top:8px; right:8px; font-size:.75rem; padding:2px 8px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <strong>Starter Kit</strong>
+    <button id="theme" aria-label="테마 변경">🌓 테마</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <span class="badge">Monorepo Starter</span>
+    <h1>Next.js + Express 스타터킷</h1>
+    <p>프론트엔드와 백엔드를 한 저장소에서 바로 시작하세요.</p>
+    <div class="row">
+      <button class="primary" onclick="location.href='http://localhost:3000'">웹 열기 (:3000)</button>
+      <button onclick="location.href='http://localhost:4000/api/health'">API 상태 (:4000)</button>
+    </div>
+  </section>
+
+  <h2>구성</h2>
+  <div class="grid">
+    <div class="card"><h3>Next.js 15</h3><p>App Router, TypeScript, Tailwind CSS v4</p></div>
+    <div class="card"><h3>shadcn/ui</h3><p>다크 모드, 반응형 헤더/푸터 레이아웃</p></div>
+    <div class="card"><h3>Express API</h3><p>zod 검증, 에러 핸들링, 라우터 구조</p></div>
+    <div class="card"><h3>상태 관리</h3><p>Zustand + TanStack Query</p></div>
+  </div>
+
+  <h2>폴더 구조</h2>
+  <pre>apps/
+├─ web/   Next.js 15 + Tailwind + shadcn/ui
+│  └─ src/app (/, /todos, /about) · components · lib/api.ts · stores
+└─ api/   Express + TypeScript
+   └─ src/config · middlewares · routes · utils</pre>
+
+  <h2>시작하기</h2>
+  <div class="copy">
+    <button onclick="copy(this)">복사</button>
+<pre>npm install
+npm run dev   # web :3000 · api :4000</pre>
+  </div>
+
+  <h2>스크립트</h2>
+  <table>
+    <tr><td><code>npm run dev</code></td><td>web + api 동시 실행</td></tr>
+    <tr><td><code>npm run dev:web</code> / <code>dev:api</code></td><td>개별 실행</td></tr>
+    <tr><td><code>npm run build</code></td><td>api, web 순서로 빌드</td></tr>
+    <tr><td><code>npm run lint</code> / <code>typecheck</code></td><td>전체 검사</td></tr>
+  </table>
+
+  <h2>API 엔드포인트</h2>
+  <table>
+    <tr><td><code>GET /api/health</code></td><td>서버 상태</td></tr>
+    <tr><td><code>GET /api/todos</code></td><td>목록 조회</td></tr>
+    <tr><td><code>POST /api/todos</code></td><td>생성 <code>{"title": "..."}</code></td></tr>
+    <tr><td><code>PATCH /api/todos/:id</code></td><td>수정</td></tr>
+    <tr><td><code>DELETE /api/todos/:id</code></td><td>삭제</td></tr>
+  </table>
+</main>
+
+<script>
+  const root = document.documentElement;
+  const saved = (() => { try { return localStorage.getItem("theme"); } catch { return null; } })();
+  root.dataset.theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  document.getElementById("theme").onclick = () => {
+    root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+    try { localStorage.setItem("theme", root.dataset.theme); } catch {}
+  };
+  function copy(btn) {
+    navigator.clipboard?.writeText(btn.nextElementSibling.textContent);
+    btn.textContent = "복사됨"; setTimeout(() => btn.textContent = "복사", 1200);
+  }
+</script>
+</body>
+</html>
